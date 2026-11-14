@@ -1,0 +1,80 @@
+<% layout("./layouts/boilerplate") %>
+
+
+  <div class="row">
+    <div class="col-6 offset-2 mt-3" >
+<h3>Listing Details</h3>
+    </div>
+     
+    <div class="col-8 offset-2" >
+            <div class="card" style="width: 45rem;">
+  <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="listing img">
+  <div class="card-body">
+    <h5 class="card-title"><%=listing.Title%></h5>
+    <p class="card-text">  <ul>
+        
+        <li><%=listing.description%></li>
+        <li><B>&#8377; <%=listing.price.toLocaleString('en-IN')%></B> / night</li>
+        <li><%=listing.location%></li>
+        <li><%=listing.country%></li>
+       
+    </ul></p>
+       <a href="/Listings/<%= listing._id %>/edit" class="btn btn-dark">Update Details</a>
+<br><br>
+<form method="post" action="/Listings/<%= listing._id %>/delete?_method=DELETE">
+    <button class="btn" style="background-color: red;color: white;">Delete</button>
+</form>
+<hr>
+<div class="col-8 offset-2" >
+  <h4 class="mb-3 mt-3">Leave a review</h4>
+  <form action="/Listings/<%= listing._id %>/reviews" method="post">
+    <div class="mb-3 mt-3">
+      <label for="rating" class="form-label">Rating</label>
+      <input type="range" min="1" max="5" id="rating" name="review[rating]" class="form-range">
+    </div>
+    <div class="mb-3 mt-3">
+      <label for="comment" class="form-label">Comments:</label>
+      <textarea name="review[comment]" id="comment" cols="20" rows="4" class="form-control" required></textarea>
+    </div>
+    <button class="btn btn-outline-dark">Submit</button>
+  </form>
+
+  
+</div>
+<br>
+<hR>
+<h4>All reviews</h4>
+<div class="row ">
+<% for(review of listing.reviews){ %>
+  
+ <div class="card border-success mb-3 ms-3 col-6 " style="max-width: 18rem; border: 0.5px solid goldenrod !important;">
+  <div class="card-header bg-transparent border-success" >John snow</div>
+  <div class="card-body text-success">
+    
+    <p class="card-text"><%= review.comment %>, <%= review.rating %> stars</p>
+   
+  </div>
+  <div class="card-footer bg-transparent border-success" style="font-size:9px ;"><%= review.createdAt %></div>
+  <form method="post" action="/Listings/<%= listing._id %>/reviews/<%= review._id %>?_method=delete"><button class="btn btn-sm btn-dark mb-2">Delete</button></form>
+
+</div>
+
+<% }  %>
+ 
+</div>
+</div>
+
+   
+  </div>
+</div>
+
+    </div>
+  </div>
+       
+        
+
+   
+
+  
+ 
+
